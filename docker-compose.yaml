@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: netuno-typescript-api
+    volumes:
+      - .:/home/node/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:9.6.24
+    container_name: netuno-typescript-db
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.docker/dbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
