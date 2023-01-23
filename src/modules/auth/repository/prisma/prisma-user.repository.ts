@@ -17,6 +17,7 @@ export class PrismaUserRepository implements UserRepository {
         avatarKey: params.avatarKey,
       },
       select: {
+        id: true,
         name: true,
         email: true,
         active: true,

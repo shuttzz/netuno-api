@@ -43,8 +43,8 @@ export class UserService {
         this.configService.get('AWS_USERS_FOLDER'),
       );
 
-      createUserDto.avatarUrl = fileUpload.avatarUrl;
-      createUserDto.avatarKey = fileUpload.avatarKey;
+      createUserDto.avatarUrl = fileUpload.publicUrl;
+      createUserDto.avatarKey = fileUpload.key;
     }
 
     if (

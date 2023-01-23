@@ -1,26 +1,43 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
+import { CredentialsDto } from '../dto/credentials.dto';
+import { UserRepository, UserResponse } from '../repository/user.respository';
+import { compare } from 'bcrypt';
+import { InvalidCredentialsException } from '../../../shared/exceptions/invalid-credentials.exception';
+import { JwtService } from '@nestjs/jwt';
+import * as process from 'process';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateUserDto) {
-    return 'This action adds a new auth';
+  constructor(
+    private userRepository: UserRepository,
+    private jwtService: JwtService,
+  ) {}
+  async login(
+    credentials: CredentialsDto,
+  ): Promise<{ token: string; user: UserResponse }> {
+    const user = await this.checkCredentials(credentials);
+    const token = this.jwtService.sign(
+      { id: user.id },
+      { expiresIn: process.env.APP_AUTH_EXPIRES_IN, subject: user.id },
+    );
+
+    return { token, user };
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  private async checkCredentials(
+    credentials: CredentialsDto,
+  ): Promise<UserResponse> {
+    const { email, password, remember } = credentials;
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    const userFind = await this.userRepository.findByEmail(email);
 
-  update(id: number, updateAuthDto: UpdateUserDto) {
-    return `This action updates a #${id} auth`;
-  }
+    if (userFind) {
+      if (await compare(password, userFind.password)) {
+        delete userFind.password;
+        return userFind;
+      }
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    throw new InvalidCredentialsException('Usuário/Senha incorretos');
   }
 }
