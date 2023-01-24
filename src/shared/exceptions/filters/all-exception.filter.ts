@@ -4,6 +4,7 @@ import {
   Catch,
   ExceptionFilter,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AppException } from '../app.exception';
 
@@ -35,6 +36,11 @@ export class AllExceptionsFilter implements ExceptionFilter {
       parsedException.description =
         //@ts-ignore
         exception.getResponse()?.message;
+    } else if (exception instanceof UnauthorizedException) {
+      parsedException.status = 401;
+      parsedException.message = 'Sem Autorização';
+      parsedException.description =
+        'Você não tem autorização para executar essa ação';
     } else if (exception instanceof Error) {
       parsedException.status = 500;
       parsedException.message = 'Internal Server Error';

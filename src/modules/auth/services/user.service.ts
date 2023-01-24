@@ -75,17 +75,18 @@ export class UserService {
     updateUserDto: UpdateUserDto,
     fileRequest: Express.Multer.File,
   ) {
+    const userFind = await this.userRepository.findOne(id);
+    if (!userFind) {
+      throw new EntityNotFoundException(
+        'Não existe um usuário cadastrado com esse ID',
+      );
+    }
+
     const userExists = await this.userRepository.findByEmail(
       updateUserDto.email,
     );
 
-    if (!userExists) {
-      throw new EntityNotFoundException(
-        'Não existe um usuário cadastrado com ese e-mail',
-      );
-    }
-
-    if (userExists.id !== id) {
+    if (userExists !== null && userExists.id !== id) {
       throw new InvalidPermissionException(
         'Você não tem permissão para alterar dados de outro usuário',
       );
@@ -104,10 +105,10 @@ export class UserService {
     }
 
     if (fileRequest) {
-      if (userExists.avatarUrl) {
+      if (userFind.avatarUrl) {
         await this.uploadService.deleteFile({
-          publicUrl: userExists.avatarUrl,
-          key: userExists.avatarKey,
+          publicUrl: userFind.avatarUrl,
+          key: userFind.avatarKey,
         });
       }
 
@@ -119,10 +120,10 @@ export class UserService {
       updateUserDto.avatarUrl = fileUploaded.publicUrl;
       updateUserDto.avatarKey = fileUploaded.key;
     } else if (updateUserDto.keepImage === 'false') {
-      if (userExists.avatarUrl) {
+      if (userFind.avatarUrl) {
         await this.uploadService.deleteFile({
-          publicUrl: userExists.avatarUrl,
-          key: userExists.avatarKey,
+          publicUrl: userFind.avatarUrl,
+          key: userFind.avatarKey,
         });
       }
       updateUserDto.avatarUrl = null;
@@ -130,12 +131,12 @@ export class UserService {
     }
 
     await this.userRepository.update({
-      id: userExists.id,
+      id: userFind.id,
       avatarUrl: updateUserDto.avatarUrl,
       avatarKey: updateUserDto.avatarKey,
-      active: updateUserDto.active || userExists.active,
-      firebaseToken: updateUserDto.firebaseToken || userExists.firebaseToken,
-      password: updateUserDto.password || userExists.password,
+      active: updateUserDto.active || userFind.active,
+      firebaseToken: updateUserDto.firebaseToken || userFind.firebaseToken,
+      password: updateUserDto.password || userFind.password,
       email: updateUserDto.email,
       name: updateUserDto.name,
     });
@@ -146,8 +147,15 @@ export class UserService {
 
     if (!userExists) {
       throw new EntityNotFoundException(
-        'Não existe um usuário cadastrado com ese e-mail',
+        'Não existe um usuário cadastrado com esse ID',
       );
+    }
+
+    if (userExists.avatarUrl) {
+      await this.uploadService.deleteFile({
+        publicUrl: userExists.avatarUrl,
+        key: userExists.avatarKey,
+      });
     }
 
     await this.userRepository.delete(id);
