@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// model FileNetuno {
+//   id        String   @id @default(uuid()) @db.VarChar(36)
+//   publicUrl String   @map("public_url")
+//   key       String   @db.VarChar(255)
+//   User      User[]
+//   createdAt DateTime @default(now()) @map("created_at")
+//   updatedAt DateTime @updatedAt @map("updated_at")
+//
+//   @@map("files")
+// }
+
+model User {
+  id            String      @id @default(uuid()) @db.VarChar(36)
+  name          String      @db.VarChar(100)
+  email         String      @unique @db.VarChar(150)
+  password      String      @db.VarChar(100)
+  avatarUrl     String?     @map("avatar_url")
+  avatarKey     String?     @db.VarChar(255) @map("avatar_key")
+  active        Boolean     @db.Boolean @default(true)
+  firebaseToken String?     @db.VarChar(255) @map("firebase_token")
+  createdAt     DateTime    @default(now()) @map("created_at")
+  updatedAt     DateTime    @updatedAt @map("updated_at")
+
+  @@map("users")
+}
