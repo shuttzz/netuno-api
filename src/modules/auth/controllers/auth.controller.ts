@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthService } from '../services/auth.service';
 import { CredentialsDto } from '../dto/credentials.dto';
-import { UserResponse } from '../repository/user.respository';
+import { UserResponse } from '../repositories/user.respository';
 import { RecoverPasswordDto } from '../dto/recover-password.dto';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
 

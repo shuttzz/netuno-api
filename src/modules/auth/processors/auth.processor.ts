@@ -7,7 +7,7 @@ import { Inject } from '@nestjs/common';
 import { IEmailProvider } from '../../../shared/providers/emailProvider/IEmailProvider';
 import { processorRecoverPasswordCode } from '../constants/auth.constant';
 import { Job } from 'bull';
-import { UserEntity } from '../repository/user.respository';
+import { UserEntity } from '../repositories/user.respository';
 import { resolvePath } from '../../../shared/utils/resolvePath';
 
 export type AuthRecoverPassowrdProcessorType = {

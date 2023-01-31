@@ -5,7 +5,7 @@ import {
   UserEntity,
   UserRepository,
   UserResponse,
-} from '../repository/user.respository';
+} from '../repositories/user.respository';
 import { ExistingEntityException } from '../../../shared/exceptions/existing-entity.exception';
 import { UploadService } from '../../upload/services/upload.service';
 import { ConfigService } from '@nestjs/config';
