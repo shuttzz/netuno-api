@@ -5,6 +5,7 @@ import {
 } from '../repositories/category.repository';
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { ExistingEntityException } from '../../../shared/exceptions/existing-entity.exception';
+import { EntityNotFoundException } from '../../../shared/exceptions/entity-not-found.exception';
 
 @Injectable()
 export class CategoryService {
@@ -30,5 +31,15 @@ export class CategoryService {
 
   async findAll(userId: string): Promise<CategoryEntity[]> {
     return this.categoryRepository.findAll(userId);
+  }
+
+  async findOne(id: string, userId: any): Promise<CategoryEntity> {
+    const categoryFind = await this.categoryRepository.findOne(id, userId);
+
+    if (!categoryFind) {
+      throw new EntityNotFoundException('Categoria não encontrada');
+    }
+
+    return categoryFind;
   }
 }

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UseGuards,
   ValidationPipe,
@@ -25,8 +26,12 @@ export class CategoryController {
   }
 
   @Get()
-  @UseGuards(AuthGuard('jwt'))
   async findAll(@GetUser() user: { id: string }) {
     return this.service.findAll(user.id);
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string, @GetUser() user: { id: string }) {
+    return this.service.findOne(id, user.id);
   }
 }

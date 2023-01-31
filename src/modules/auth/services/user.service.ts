@@ -67,7 +67,13 @@ export class UserService {
   }
 
   async findOne(id: string): Promise<UserResponse> {
-    return this.userRepository.findOne(id);
+    const userFind = await this.userRepository.findOne(id);
+
+    if (!userFind) {
+      throw new EntityNotFoundException('Usuário não encontrado');
+    }
+
+    return userFind;
   }
 
   async update(

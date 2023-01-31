@@ -43,7 +43,12 @@ export class PrismaCategoryRepository implements CategoryRepository {
   }
 
   async findOne(id: string, userId: string): Promise<CategoryEntity> {
-    return Promise.resolve(undefined);
+    return this.prisma.category.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
   }
 
   async update(params: CategoryEntity, userId: string): Promise<void> {
