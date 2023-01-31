@@ -11,18 +11,19 @@ datasource db {
 }
 
 model User {
-  id               String             @id @default(uuid()) @db.VarChar(36)
-  name             String             @db.VarChar(100)
-  email            String             @unique @db.VarChar(150)
-  password         String             @db.VarChar(100)
-  avatarUrl        String?            @map("avatar_url")
-  avatarKey        String?            @map("avatar_key") @db.VarChar(255)
-  active           Boolean            @default(true) @db.Boolean
-  firebaseToken    String?            @map("firebase_token") @db.VarChar(255)
-  createdAt        DateTime           @default(now()) @map("created_at")
-  updatedAt        DateTime           @updatedAt @map("updated_at")
-  PasswordRecovery PasswordRecovery[]
-  Categories       Category[]
+  id                String             @id @default(uuid()) @db.VarChar(36)
+  name              String             @db.VarChar(100)
+  email             String             @unique @db.VarChar(150)
+  password          String             @db.VarChar(100)
+  avatarUrl         String?            @map("avatar_url")
+  avatarKey         String?            @map("avatar_key") @db.VarChar(255)
+  active            Boolean            @default(true) @db.Boolean
+  firebaseToken     String?            @map("firebase_token") @db.VarChar(255)
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  passwordsRecovery PasswordRecovery[]
+  categories        Category[]
+  wallets           Wallet[]
 
   @@map("users")
 }
@@ -30,8 +31,8 @@ model User {
 model PasswordRecovery {
   id        String   @id @default(uuid()) @db.VarChar(36)
   user      User     @relation(fields: [userId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  userId    String   @db.VarChar(36) @map("user_id")
-  code      String   @db.VarChar(36) @unique
+  userId    String   @map("user_id") @db.VarChar(36)
+  code      String   @unique @db.VarChar(36)
   createdAt DateTime @default(now()) @map("created_at")
   expiresIn DateTime @map("expires_in")
 
@@ -42,9 +43,20 @@ model Category {
   id        String   @id @default(uuid()) @db.VarChar(36)
   name      String   @db.VarChar(50)
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String   @db.VarChar(36) @map("user_id")
+  userId    String   @map("user_id") @db.VarChar(36)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("categories")
+}
+
+model Wallet {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  name      String   @db.VarChar(50)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String   @map("user_id") @db.VarChar(36)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("wallets")
 }
