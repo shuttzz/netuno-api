@@ -27,4 +27,8 @@ export class CategoryService {
 
     return this.categoryRepository.create(body, userId);
   }
+
+  async findAll(userId: string): Promise<CategoryEntity[]> {
+    return this.categoryRepository.findAll(userId);
+  }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UseGuards,
   ValidationPipe,
@@ -21,5 +22,11 @@ export class CategoryController {
     @Body(ValidationPipe) body: CreateCategoryDto,
   ) {
     return this.service.create(body, user.id);
+  }
+
+  @Get()
+  @UseGuards(AuthGuard('jwt'))
+  async findAll(@GetUser() user: { id: string }) {
+    return this.service.findAll(user.id);
   }
 }

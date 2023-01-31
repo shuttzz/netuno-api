@@ -23,7 +23,11 @@ export class PrismaCategoryRepository implements CategoryRepository {
   }
 
   async findAll(userId: string): Promise<CategoryEntity[]> {
-    return Promise.resolve([]);
+    return this.prisma.category.findMany({
+      where: {
+        userId,
+      },
+    });
   }
 
   async findByName(name: string, userId: string): Promise<CategoryEntity> {
