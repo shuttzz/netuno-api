@@ -22,6 +22,7 @@ model User {
   createdAt        DateTime           @default(now()) @map("created_at")
   updatedAt        DateTime           @updatedAt @map("updated_at")
   PasswordRecovery PasswordRecovery[]
+  Categories       Category[]
 
   @@map("users")
 }
@@ -33,4 +34,17 @@ model PasswordRecovery {
   code      String   @db.VarChar(36) @unique
   createdAt DateTime @default(now()) @map("created_at")
   expiresIn DateTime @map("expires_in")
+
+  @@map("passwords_recovery")
+}
+
+model Category {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  name      String   @db.VarChar(50)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.VarChar(36) @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
 }
