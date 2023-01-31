@@ -5,6 +5,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { QueueModule } from './queue/queue.module';
 import { CategoryModule } from './modules/category/category.module';
+import { WalletModule } from './modules/wallet/wallet.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { CategoryModule } from './modules/category/category.module';
     UploadModule,
     QueueModule,
     CategoryModule,
+    WalletModule,
   ],
   controllers: [],
   providers: [],
