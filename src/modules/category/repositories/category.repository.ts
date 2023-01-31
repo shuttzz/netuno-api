@@ -20,7 +20,7 @@ export abstract class CategoryRepository {
 
   abstract findAll(userId: string): Promise<CategoryEntity[]>;
 
-  abstract update(params: CategoryEntity, userId: string): Promise<void>;
+  abstract update(id: string, params: Partial<CategoryEntity>): Promise<void>;
 
   abstract delete(id: string): Promise<void>;
 }

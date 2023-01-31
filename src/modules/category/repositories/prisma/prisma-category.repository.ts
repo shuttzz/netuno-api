@@ -51,7 +51,14 @@ export class PrismaCategoryRepository implements CategoryRepository {
     });
   }
 
-  async update(params: CategoryEntity, userId: string): Promise<void> {
-    return Promise.resolve(undefined);
+  async update(id: string, params: CategoryEntity): Promise<void> {
+    await this.prisma.category.update({
+      data: {
+        name: params.name,
+      },
+      where: {
+        id,
+      },
+    });
   }
 }

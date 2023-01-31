@@ -6,6 +6,7 @@ import {
 import { CreateCategoryDto } from '../dto/create-category.dto';
 import { ExistingEntityException } from '../../../shared/exceptions/existing-entity.exception';
 import { EntityNotFoundException } from '../../../shared/exceptions/entity-not-found.exception';
+import { UpdateCategoryDto } from '../dto/update-category.dto';
 
 @Injectable()
 export class CategoryService {
@@ -41,5 +42,30 @@ export class CategoryService {
     }
 
     return categoryFind;
+  }
+
+  async update(
+    id: string,
+    body: UpdateCategoryDto,
+    userId: string,
+  ): Promise<void> {
+    const categoryFind = await this.categoryRepository.findOne(id, userId);
+
+    if (!categoryFind) {
+      throw new EntityNotFoundException('Categoria não existe');
+    }
+
+    const categoryExists = await this.categoryRepository.findByName(
+      body.name,
+      userId,
+    );
+
+    if (categoryExists !== null && categoryExists.id !== id) {
+      throw new ExistingEntityException(
+        'Já existe uma categoria com esse nome',
+      );
+    }
+
+    await this.categoryRepository.update(id, body);
   }
 }
