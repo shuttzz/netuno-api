@@ -10,6 +10,7 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - queue
 
   db:
     image: postgres:9.6.24
@@ -20,3 +21,11 @@ services:
       - ./.docker/dbdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
+  queue:
+    image: bitnami/redis:latest
+    container_name: netuno-typescript-queue
+    environment:
+      - REDIS_PASSWORD=netuno
+    ports:
+      - "6379:6379"

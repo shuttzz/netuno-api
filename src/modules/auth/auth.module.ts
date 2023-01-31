@@ -10,6 +10,9 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { BullModule } from '@nestjs/bull';
+import { appQueuekey } from '../../shared/constants/keys.constants';
+import { AuthProcessor } from './processors/auth.processor';
 
 @Module({
   controllers: [AuthController, UserController],
@@ -20,8 +23,12 @@ import { JwtStrategy } from './strategies/jwt.strategy';
     PrismaService,
     UploadService,
     JwtStrategy,
+    AuthProcessor,
   ],
   imports: [
+    BullModule.registerQueueAsync({
+      name: appQueuekey,
+    }),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => {

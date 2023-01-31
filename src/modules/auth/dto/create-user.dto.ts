@@ -9,22 +9,22 @@ import {
 export class CreateUserDto {
   id?: string;
 
-  @IsNotEmpty({ message: 'Name is required' })
-  @MinLength(5, { message: 'Name must be at least 5 characters long' })
-  @MaxLength(100, { message: 'Name cannot be longer than 100 characters' })
+  @IsNotEmpty({ message: 'Name é obrigatório' })
+  @MinLength(5, { message: 'Nome precisa ter ao menos 5 caracteres' })
+  @MaxLength(100, { message: 'Nome não pode ter mais que 100 caracteres' })
   name: string;
 
-  @IsNotEmpty({ message: 'E-mail is required' })
-  @MaxLength(150, { message: 'Email cannot be longer than 150 characters' })
+  @IsNotEmpty({ message: 'E-mail é obrigatório' })
+  @MaxLength(150, { message: 'E-mail não pode ter mais que 150 caracteres' })
   @IsEmail()
   email: string;
 
-  @IsNotEmpty({ message: 'Password is required' })
-  @MinLength(8, { message: 'Password must be at least 8 characters long' })
+  @IsNotEmpty({ message: 'Senha é obrigatória' })
+  @MinLength(8, { message: 'Senha precisa ter ao menos 8 caracteres' })
   password: string;
 
   @ValidateIf((object) => object.password !== null)
-  @IsNotEmpty({ message: 'Password confirmation is required' })
+  @IsNotEmpty({ message: 'Confirmação de senha é obrigatório' })
   passwordConfirmation: string;
 
   avatarUrl: string;

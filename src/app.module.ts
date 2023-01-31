@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { DatabaseModule } from './modules/database/database.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { QueueModule } from './queue/queue.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { UploadModule } from './modules/upload/upload.module';
     DatabaseModule,
     AuthModule,
     UploadModule,
+    QueueModule,
   ],
   controllers: [],
   providers: [],
