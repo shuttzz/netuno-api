@@ -10,28 +10,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// model FileNetuno {
-//   id        String   @id @default(uuid()) @db.VarChar(36)
-//   publicUrl String   @map("public_url")
-//   key       String   @db.VarChar(255)
-//   User      User[]
-//   createdAt DateTime @default(now()) @map("created_at")
-//   updatedAt DateTime @updatedAt @map("updated_at")
-//
-//   @@map("files")
-// }
-
 model User {
-  id            String      @id @default(uuid()) @db.VarChar(36)
-  name          String      @db.VarChar(100)
-  email         String      @unique @db.VarChar(150)
-  password      String      @db.VarChar(100)
-  avatarUrl     String?     @map("avatar_url")
-  avatarKey     String?     @db.VarChar(255) @map("avatar_key")
-  active        Boolean     @db.Boolean @default(true)
-  firebaseToken String?     @db.VarChar(255) @map("firebase_token")
-  createdAt     DateTime    @default(now()) @map("created_at")
-  updatedAt     DateTime    @updatedAt @map("updated_at")
+  id               String             @id @default(uuid()) @db.VarChar(36)
+  name             String             @db.VarChar(100)
+  email            String             @unique @db.VarChar(150)
+  password         String             @db.VarChar(100)
+  avatarUrl        String?            @map("avatar_url")
+  avatarKey        String?            @map("avatar_key") @db.VarChar(255)
+  active           Boolean            @default(true) @db.Boolean
+  firebaseToken    String?            @map("firebase_token") @db.VarChar(255)
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime           @updatedAt @map("updated_at")
+  PasswordRecovery PasswordRecovery[]
 
   @@map("users")
+}
+
+model PasswordRecovery {
+  id        String   @id @default(uuid()) @db.VarChar(36)
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.VarChar(36) @map("user_id")
+  code      String   @db.VarChar(36) @unique
+  createdAt DateTime @default(now()) @map("created_at")
+  expiresIn DateTime @map("expires_in")
 }
