@@ -5,7 +5,7 @@ import {
   UserEntity,
   UserRepository,
   UserResponse,
-} from '../repository/user.respository';
+} from '../repositories/user.respository';
 import { ExistingEntityException } from '../../../shared/exceptions/existing-entity.exception';
 import { UploadService } from '../../upload/services/upload.service';
 import { ConfigService } from '@nestjs/config';
@@ -67,7 +67,13 @@ export class UserService {
   }
 
   async findOne(id: string): Promise<UserResponse> {
-    return this.userRepository.findOne(id);
+    const userFind = await this.userRepository.findOne(id);
+
+    if (!userFind) {
+      throw new EntityNotFoundException('Usuário não encontrado');
+    }
+
+    return userFind;
   }
 
   async update(
@@ -146,9 +152,7 @@ export class UserService {
     const userExists = await this.userRepository.findOne(id);
 
     if (!userExists) {
-      throw new EntityNotFoundException(
-        'Não existe um usuário cadastrado com esse ID',
-      );
+      throw new EntityNotFoundException('Usuário não encontrado');
     }
 
     if (userExists.avatarUrl) {

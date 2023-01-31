@@ -1,9 +1,9 @@
-import { UserRepository } from '../repository/user.respository';
-import { PrismaUserRepository } from '../repository/prisma/prisma-user.repository';
+import { UserRepository } from '../repositories/user.respository';
+import { PrismaUserRepository } from '../repositories/prisma/prisma-user.repository';
 import { emailKey } from '../../../shared/constants/keys.constants';
 import { SESEmailProvider } from '../../../shared/providers/emailProvider/implementations/SESEmailProvider';
-import { PasswordRecoveryRepository } from '../repository/auth.respository';
-import { PrismaAuthRepository } from '../repository/prisma/prisma-auth.repository';
+import { PasswordRecoveryRepository } from '../repositories/auth.respository';
+import { PrismaAuthRepository } from '../repositories/prisma/prisma-auth.repository';
 
 export const authProvider = [
   {

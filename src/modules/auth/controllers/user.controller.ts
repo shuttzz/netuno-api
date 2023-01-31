@@ -11,6 +11,7 @@ import {
   UploadedFile,
   UseGuards,
   UseInterceptors,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
@@ -25,7 +26,7 @@ export class UserController {
   @Post()
   @UseInterceptors(ClassSerializerInterceptor, FileInterceptor('avatar'))
   async create(
-    @Body() createAuthDto: CreateUserDto,
+    @Body(ValidationPipe) createAuthDto: CreateUserDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.userService.create(createAuthDto, file);

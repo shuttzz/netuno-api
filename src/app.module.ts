@@ -4,6 +4,7 @@ import { DatabaseModule } from './modules/database/database.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { QueueModule } from './queue/queue.module';
+import { CategoryModule } from './modules/category/category.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { QueueModule } from './queue/queue.module';
     AuthModule,
     UploadModule,
     QueueModule,
+    CategoryModule,
   ],
   controllers: [],
   providers: [],

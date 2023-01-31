@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CredentialsDto } from '../dto/credentials.dto';
-import { UserRepository, UserResponse } from '../repository/user.respository';
+import { UserRepository, UserResponse } from '../repositories/user.respository';
 import { compare } from 'bcrypt';
 import { InvalidCredentialsException } from '../../../shared/exceptions/invalid-credentials.exception';
 import { JwtService } from '@nestjs/jwt';
@@ -11,7 +11,7 @@ import { appQueuekey } from '../../../shared/constants/keys.constants';
 import { Queue } from 'bull';
 import { EntityNotFoundException } from '../../../shared/exceptions/entity-not-found.exception';
 import { genereteRecoverPasswordCode } from '../../../shared/utils/genereteRecoverPasswordCode.utils';
-import { PasswordRecoveryRepository } from '../repository/auth.respository';
+import { PasswordRecoveryRepository } from '../repositories/auth.respository';
 import { processorRecoverPasswordCode } from '../constants/auth.constant';
 import { jobOptions } from '../../../shared/configs/JobOptions';
 import { ResetPasswordDto } from '../dto/reset-password.dto';
