@@ -152,9 +152,7 @@ export class UserService {
     const userExists = await this.userRepository.findOne(id);
 
     if (!userExists) {
-      throw new EntityNotFoundException(
-        'Não existe um usuário cadastrado com esse ID',
-      );
+      throw new EntityNotFoundException('Usuário não encontrado');
     }
 
     if (userExists.avatarUrl) {

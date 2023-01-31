@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -46,5 +47,11 @@ export class CategoryController {
     @Body() body: UpdateCategoryDto,
   ) {
     await this.service.update(id, body, user.id);
+  }
+
+  @Delete(':id')
+  @HttpCode(204)
+  async remove(@Param('id') id: string, @GetUser() user: { id: string }) {
+    await this.service.delete(id, user.id);
   }
 }

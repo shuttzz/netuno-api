@@ -68,4 +68,14 @@ export class CategoryService {
 
     await this.categoryRepository.update(id, body);
   }
+
+  async delete(id: string, userId: string): Promise<void> {
+    const categoryExists = await this.categoryRepository.findOne(id, userId);
+
+    if (!categoryExists) {
+      throw new EntityNotFoundException('Categoria não encontrada');
+    }
+
+    await this.categoryRepository.delete(id);
+  }
 }
