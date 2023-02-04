@@ -6,6 +6,7 @@ import { UploadModule } from './modules/upload/upload.module';
 import { QueueModule } from './queue/queue.module';
 import { CategoryModule } from './modules/category/category.module';
 import { WalletModule } from './modules/wallet/wallet.module';
+import { RegisterModule } from './modules/register/register.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
     QueueModule,
     CategoryModule,
     WalletModule,
+    RegisterModule,
   ],
   controllers: [],
   providers: [],

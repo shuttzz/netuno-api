@@ -83,9 +83,7 @@ export class UserService {
   ) {
     const userFind = await this.userRepository.findOne(id);
     if (!userFind) {
-      throw new EntityNotFoundException(
-        'Não existe um usuário cadastrado com esse ID',
-      );
+      throw new EntityNotFoundException('usuário não cadastrado');
     }
 
     const userExists = await this.userRepository.findByEmail(
