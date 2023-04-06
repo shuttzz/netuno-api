@@ -18,6 +18,7 @@ import { UpdateUserDto } from '../dto/update-user.dto';
 import { UserService } from '../services/user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { AuthGuard } from '@nestjs/passport';
+import { UserResponse } from '../repositories/user.respository';
 
 @Controller('users')
 export class UserController {
@@ -34,7 +35,7 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard())
-  async findAll() {
+  async findAll(): Promise<UserResponse[]> {
     return this.userService.findAll();
   }
 

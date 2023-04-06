@@ -59,10 +59,12 @@ export class UserService {
       createUserDto.password = await hash(createUserDto.password, 8);
     }
 
+    createUserDto.active = Boolean(createUserDto.active);
+
     return this.userRepository.create(createUserDto);
   }
 
-  async findAll(): Promise<UserEntity[]> {
+  async findAll(): Promise<UserResponse[]> {
     return this.userRepository.findAll();
   }
 
@@ -72,6 +74,8 @@ export class UserService {
     if (!userFind) {
       throw new EntityNotFoundException('Usuário não encontrado');
     }
+
+    delete userFind.password;
 
     return userFind;
   }

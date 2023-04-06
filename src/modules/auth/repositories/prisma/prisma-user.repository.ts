@@ -36,8 +36,17 @@ export class PrismaUserRepository implements UserRepository {
     });
   }
 
-  async findAll(): Promise<UserEntity[]> {
-    return this.prisma.user.findMany();
+  async findAll(): Promise<UserResponse[]> {
+    return this.prisma.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        active: true,
+        avatarUrl: true,
+        firebaseToken: true,
+      },
+    });
   }
 
   async findOne(id: string): Promise<UserEntity> {
