@@ -1,0 +1,31 @@
+_id: req_f6bd2edb63074387b5b94936005eaedd
+type: Request
+parentId: fld_0817635921bc4988b4f2c3ed5f4347cb
+modified: 1680802986933
+created: 1680802910457
+url: "{{ _.baseURL }}/categories"
+name: Create
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name": "Lazer"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953542
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
