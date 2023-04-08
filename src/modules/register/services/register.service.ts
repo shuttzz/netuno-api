@@ -10,6 +10,18 @@ import { CategoryService } from '../../category/services/category.service';
 import { WalletService } from '../../wallet/services/wallet.service';
 import { EntityNotFoundException } from '../../../shared/exceptions/entity-not-found.exception';
 import { UpdateRegisterDto } from '../dto/update-register.dto';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import {
+  IsDate,
+  IsNotEmpty,
+  IsNumber,
+  MaxLength,
+  Min,
+  MinLength,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+import { th } from 'date-fns/locale';
+import { PrismaService } from '../../database/prisma.service';
 
 @Injectable()
 export class RegisterService {
@@ -19,6 +31,7 @@ export class RegisterService {
     private categorySerivce: CategoryService,
     private walleteService: WalletService,
     private readonly configService: ConfigService,
+    private prisma: PrismaService,
   ) {}
 
   async create(
@@ -125,5 +138,40 @@ export class RegisterService {
     }
 
     await this.registerRepository.delete(id);
+  }
+
+  // @Cron('*/10 * * * * *') // A cada 10 segundos
+  // @Cron(CronExpression.EVERY_5_MINUTES)
+  // @Cron('0 * * * * *') // A cada minuto
+  @Cron(CronExpression.EVERY_DAY_AT_3AM) // Todo dia as 3:00 da manhã
+  async schedulleRecurrencyRegister() {
+    const recurrenciesRegisters = await this.registerRepository.findRecurrent();
+
+    const idsToUpdate = [];
+
+    const newRegisters = [];
+
+    recurrenciesRegisters.forEach((register) => {
+      idsToUpdate.push(register.id);
+      newRegisters.push({
+        description: register.description,
+        value: register.value,
+        dueDate: new Date(),
+        entry: register.entry,
+        recurrency: true,
+        fileUrl: null,
+        fileKey: null,
+        // @ts-ignore
+        categoryId: register.category_id,
+        // @ts-ignore
+        walletId: register.wallet_id,
+        // @ts-ignore
+        userId: register.user_id,
+      });
+    });
+
+    await this.registerRepository.generateRecurrency(newRegisters, idsToUpdate);
+
+    console.log('JOB RECURRENCY DONE');
   }
 }

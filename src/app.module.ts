@@ -7,9 +7,11 @@ import { QueueModule } from './queue/queue.module';
 import { CategoryModule } from './modules/category/category.module';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { RegisterModule } from './modules/register/register.module';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,

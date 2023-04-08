@@ -83,4 +83,5 @@ model Register {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   @@map("registers")
+  @@index([recurrency, dueDate])
 }

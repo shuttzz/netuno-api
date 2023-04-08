@@ -26,7 +26,7 @@ export abstract class RegisterRepository {
     userId: string,
   ): Promise<RegisterEntity>;
 
-  abstract findRecurrent(userId: string): Promise<RegisterEntity[]>;
+  abstract findRecurrent(): Promise<RegisterEntity[]>;
 
   abstract findOne(id: string, userId: string): Promise<RegisterEntity>;
 
@@ -35,4 +35,6 @@ export abstract class RegisterRepository {
   abstract update(id: string, params: UpdateRegisterDto): Promise<void>;
 
   abstract delete(id: string): Promise<void>;
+
+  abstract generateRecurrency(data: CreateRegisterDto[], ids: string[]);
 }

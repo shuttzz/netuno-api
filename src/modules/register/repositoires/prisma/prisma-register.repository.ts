@@ -3,6 +3,8 @@ import { RegisterEntity, RegisterRepository } from '../register.repository';
 import { PrismaService } from '../../../database/prisma.service';
 import { CreateRegisterDto } from '../../dto/create-register.dto';
 import { UpdateRegisterDto } from '../../dto/update-register.dto';
+import { getDate, getMonth } from 'date-fns';
+import { Register } from '@prisma/client';
 
 @Injectable()
 export class PrismaRegisterRepository implements RegisterRepository {
@@ -93,15 +95,13 @@ export class PrismaRegisterRepository implements RegisterRepository {
     return null;
   }
 
-  async findRecurrent(userId: string): Promise<RegisterEntity[]> {
-    const results = await this.prisma.register.findMany({
-      where: {
-        user: {
-          id: userId,
-        },
-        recurrency: true,
-      },
-    });
+  async findRecurrent(): Promise<RegisterEntity[]> {
+    const dateNow = new Date(); // Mês começa em 0 ou seja janeiro é igual a 0
+    const dayNow = getDate(dateNow);
+    const monthNow = getMonth(dateNow) + 1;
+
+    const results: Register[] = await this.prisma
+      .$queryRaw`SELECT * FROM "public"."registers" WHERE EXTRACT('Month' FROM due_date) + 1 = ${monthNow} AND EXTRACT('Day' FROM due_date) = ${dayNow} AND recurrency = true`;
 
     return results.map((register) => ({
       ...register,
@@ -134,5 +134,25 @@ export class PrismaRegisterRepository implements RegisterRepository {
         },
       },
     });
+  }
+
+  async generateRecurrency(data: CreateRegisterDto[], ids: string[]) {
+    const createdPromise = this.prisma.register.createMany({
+      // @ts-ignore
+      data: Object.values(data),
+    });
+
+    const updatedPromise = this.prisma.register.updateMany({
+      data: {
+        recurrency: false,
+      },
+      where: {
+        id: {
+          in: ids,
+        },
+      },
+    });
+
+    await this.prisma.$transaction([createdPromise, updatedPromise]);
   }
 }
