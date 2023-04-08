@@ -1,0 +1,51 @@
+_id: req_ffdd30ab344f42b891c1416232ef0b51
+type: Request
+parentId: fld_b28a6413147c4a3ba5eb906734d246ac
+modified: 1680629331515
+created: 1680628365223
+url: "{{ _.baseURL }}/users"
+name: Create
+description: ""
+method: POST
+body:
+  mimeType: multipart/form-data
+  params:
+    - id: pair_49357798848840ab8f309a59b56a3f0b
+      name: name
+      value: José Assis de Menezes Neto
+      description: ""
+    - id: pair_c5b46d03e0a04f6897afa818fa057271
+      name: email
+      value: netomenezesucg@gmail.com
+      description: ""
+    - id: pair_45583ab23659436e963c711a07605b2c
+      name: password
+      value: 271087Copa2014
+      description: ""
+    - id: pair_624df1994d3f421787c061851652cc06
+      name: passwordConfirmation
+      value: 271087Copa2014
+      description: ""
+    - id: pair_c920efb354934f2fabc0f6354cc4cd14
+      name: active
+      value: ""
+      description: ""
+    - id: pair_d8fbb168efa84a5c82fc17b3cb35b95b
+      name: avatar
+      value: ""
+      description: ""
+      type: file
+      fileName: /home/shuttzz/Downloads/IMG_20230404_141713.jpg
+parameters: []
+headers:
+  - name: Content-Type
+    value: multipart/form-data
+authentication: {}
+metaSortKey: -1680626953542
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

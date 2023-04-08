@@ -1,0 +1,31 @@
+_id: req_a2499b17d1f74b4780dccd1fdbcd2d3f
+type: Request
+parentId: fld_df3db0c6f1e94fd485d93a5067761b49
+modified: 1680803711467
+created: 1680803711467
+url: "{{ _.baseURL }}/wallets/8686a778-c511-4fe2-bbd3-03a68dd72c4c"
+name: Update
+description: ""
+method: PUT
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name": "Bradesco"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953517
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

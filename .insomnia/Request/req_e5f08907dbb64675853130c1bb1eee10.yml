@@ -1,0 +1,24 @@
+_id: req_e5f08907dbb64675853130c1bb1eee10
+type: Request
+parentId: fld_b61e22ca8fdf4ad08e8cb3597f929b30
+modified: 1680803388737
+created: 1680803370484
+url: "{{ _.baseURL }}/wallets"
+name: FInd All
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953492
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

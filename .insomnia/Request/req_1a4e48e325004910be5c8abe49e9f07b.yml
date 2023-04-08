@@ -1,0 +1,30 @@
+_id: req_1a4e48e325004910be5c8abe49e9f07b
+type: Request
+parentId: fld_e49f4aa3d12e42c2956f2d902262f77d
+modified: 1680628338264
+created: 1680627695126
+url: "{{ _.baseURL }}/auth/reset-password"
+name: Reset Password
+description: ""
+method: PATCH
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"code": "745857",
+    	"password": "271087Copa2014",
+    	"passwordConfirmation": "271087Copa2014"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1680626953442
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

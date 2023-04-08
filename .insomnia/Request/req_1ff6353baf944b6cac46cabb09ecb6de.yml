@@ -1,0 +1,24 @@
+_id: req_1ff6353baf944b6cac46cabb09ecb6de
+type: Request
+parentId: fld_0817635921bc4988b4f2c3ed5f4347cb
+modified: 1680803297486
+created: 1680802910458
+url: "{{ _.baseURL }}/categories"
+name: FInd All
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953492
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

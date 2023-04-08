@@ -24,6 +24,7 @@ model User {
   passwordsRecovery PasswordRecovery[]
   categories        Category[]
   wallets           Wallet[]
+  registers         Register[]
 
   @@map("users")
 }
@@ -40,23 +41,47 @@ model PasswordRecovery {
 }
 
 model Category {
-  id        String   @id @default(uuid()) @db.VarChar(36)
-  name      String   @db.VarChar(50)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String   @map("user_id") @db.VarChar(36)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id        String     @id @default(uuid()) @db.VarChar(36)
+  name      String     @db.VarChar(50)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String     @map("user_id") @db.VarChar(36)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  registers Register[]
 
   @@map("categories")
 }
 
 model Wallet {
-  id        String   @id @default(uuid()) @db.VarChar(36)
-  name      String   @db.VarChar(50)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String   @map("user_id") @db.VarChar(36)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
+  id        String     @id @default(uuid()) @db.VarChar(36)
+  name      String     @db.VarChar(50)
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String     @map("user_id") @db.VarChar(36)
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  registers Register[]
 
   @@map("wallets")
+}
+
+model Register {
+  id          String   @id @default(uuid()) @db.VarChar(36)
+  description String   @db.VarChar(255)
+  value       Decimal  @db.Decimal(10, 2)
+  dueDate     DateTime @map("due_date")
+  entry       Boolean  @db.Boolean
+  recurrency  Boolean  @db.Boolean
+  fileUrl     String?  @map("file_url")
+  fileKey     String?  @map("file_key") @db.VarChar(255)
+  category    Category @relation(fields: [categoryId], references: [id], onUpdate: Cascade, onDelete: NoAction)
+  categoryId  String   @map("category_id") @db.VarChar(36)
+  wallet      Wallet   @relation(fields: [walletId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  walletId    String   @map("wallet_id") @db.VarChar(36)
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId      String   @map("user_id") @db.VarChar(36)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("registers")
+  @@index([recurrency, dueDate])
 }

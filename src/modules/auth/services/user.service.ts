@@ -59,10 +59,12 @@ export class UserService {
       createUserDto.password = await hash(createUserDto.password, 8);
     }
 
+    createUserDto.active = Boolean(createUserDto.active);
+
     return this.userRepository.create(createUserDto);
   }
 
-  async findAll(): Promise<UserEntity[]> {
+  async findAll(): Promise<UserResponse[]> {
     return this.userRepository.findAll();
   }
 
@@ -72,6 +74,8 @@ export class UserService {
     if (!userFind) {
       throw new EntityNotFoundException('Usuário não encontrado');
     }
+
+    delete userFind.password;
 
     return userFind;
   }
@@ -83,9 +87,7 @@ export class UserService {
   ) {
     const userFind = await this.userRepository.findOne(id);
     if (!userFind) {
-      throw new EntityNotFoundException(
-        'Não existe um usuário cadastrado com esse ID',
-      );
+      throw new EntityNotFoundException('usuário não cadastrado');
     }
 
     const userExists = await this.userRepository.findByEmail(

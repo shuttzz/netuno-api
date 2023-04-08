@@ -1,0 +1,24 @@
+_id: req_e29f06e11f18470d828573141f7599c8
+type: Request
+parentId: fld_b61e22ca8fdf4ad08e8cb3597f929b30
+modified: 1680803527179
+created: 1680803370486
+url: "{{ _.baseURL }}/wallets/8686a778-c511-4fe2-bbd3-03a68dd72c4c"
+name: Remove
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953504.5
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

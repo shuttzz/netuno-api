@@ -1,0 +1,30 @@
+_id: req_a53b35e6d9a04670946f60da11f5cee3
+type: Request
+parentId: fld_e49f4aa3d12e42c2956f2d902262f77d
+modified: 1680801412921
+created: 1680626953542
+url: "{{ _.baseURL }}/auth/login"
+name: Login
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email": "netomenezesucg@gmail.com",
+    	"password": "271087Copa2014",
+    	"remember": false
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1680626953542
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
