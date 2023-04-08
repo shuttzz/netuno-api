@@ -1,0 +1,59 @@
+_id: req_60d56838562a4a81a3687e1cd49c05d6
+type: Request
+parentId: fld_b28a6413147c4a3ba5eb906734d246ac
+modified: 1680802725859
+created: 1680802547989
+url: "{{ _.baseURL }}/users/a3e7e5fa-c94a-4205-a376-21f19389dd97"
+name: Update
+description: ""
+method: PUT
+body:
+  mimeType: multipart/form-data
+  params:
+    - id: pair_49357798848840ab8f309a59b56a3f0b
+      name: name
+      value: José Assis de Menezes Neto
+      description: ""
+    - id: pair_c5b46d03e0a04f6897afa818fa057271
+      name: email
+      value: netomenezesucg@gmail.com
+      description: ""
+    - id: pair_45583ab23659436e963c711a07605b2c
+      name: password
+      value: 271087Copa2014
+      description: ""
+    - id: pair_624df1994d3f421787c061851652cc06
+      name: passwordConfirmation
+      value: 271087Copa2014
+      description: ""
+    - id: pair_c920efb354934f2fabc0f6354cc4cd14
+      name: active
+      value: ""
+      description: ""
+    - id: pair_d8fbb168efa84a5c82fc17b3cb35b95b
+      name: avatar
+      value: ""
+      description: ""
+      type: file
+      fileName: /home/shuttzz/Downloads/IMG_20230404_141713.jpg
+      disabled: false
+    - id: pair_8a5730578674417bb5d1e4853f2d77e0
+      name: keepImage
+      value: "false"
+      description: ""
+parameters: []
+headers:
+  - name: Content-Type
+    value: multipart/form-data
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953517
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

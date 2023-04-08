@@ -1,0 +1,28 @@
+_id: req_1e96da94a58640b08e2c4603bd178533
+type: Request
+parentId: fld_e49f4aa3d12e42c2956f2d902262f77d
+modified: 1680627718935
+created: 1680627674195
+url: "{{ _.baseURL }}/auth/recover-password"
+name: Recover Password
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email": "netomenezesucg@gmail.com"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1680626953492
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

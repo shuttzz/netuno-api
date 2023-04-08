@@ -1,0 +1,24 @@
+_id: req_7eb9dc0b53c8437db47beb1a3e6566c3
+type: Request
+parentId: fld_b28a6413147c4a3ba5eb906734d246ac
+modified: 1680802594604
+created: 1680628365225
+url: "{{ _.baseURL }}/users/a3e7e5fa-c94a-4205-a376-21f19389dd97"
+name: Find One
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953442
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

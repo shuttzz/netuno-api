@@ -1,0 +1,31 @@
+_id: req_56d9451f6a5e4e0b8f0412bcd4685563
+type: Request
+parentId: fld_b61e22ca8fdf4ad08e8cb3597f929b30
+modified: 1680803446842
+created: 1680803370483
+url: "{{ _.baseURL }}/wallets"
+name: Create
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"name": "Itaú"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication:
+  type: bearer
+  token: "{% response 'body', 'req_a53b35e6d9a04670946f60da11f5cee3',
+    'b64::JC50b2tlbg==::46b', 'when-expired', 3600 %}"
+metaSortKey: -1680626953542
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
