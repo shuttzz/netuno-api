@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CategoryEntity } from '../../category/repositories/category.repository';
 import { ExistingEntityException } from '../../../shared/exceptions/existing-entity.exception';
 import { EntityNotFoundException } from '../../../shared/exceptions/entity-not-found.exception';
 import {

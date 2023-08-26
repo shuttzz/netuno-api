@@ -3,6 +3,7 @@ import { User } from '@prisma/client';
 export type WalletEntity = {
   id?: string;
   name: string;
+  balance: number;
   user?: User;
   createdAt?: Date;
   updatedAt?: Date;

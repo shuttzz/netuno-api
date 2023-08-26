@@ -7,7 +7,7 @@ export class PrismaWalletRepository implements WalletRepository {
   constructor(private prisma: PrismaService) {}
 
   async create(params: WalletEntity, userId: string): Promise<WalletEntity> {
-    return this.prisma.wallet.create({
+    const result = await this.prisma.wallet.create({
       data: {
         name: params.name,
         user: {
@@ -17,6 +17,13 @@ export class PrismaWalletRepository implements WalletRepository {
         },
       },
     });
+
+    if (result) {
+      return {
+        ...result,
+        balance: Number(result.balance),
+      };
+    }
   }
 
   async delete(id: string): Promise<void> {
@@ -28,15 +35,20 @@ export class PrismaWalletRepository implements WalletRepository {
   }
 
   async findAll(userId: string): Promise<WalletEntity[]> {
-    return this.prisma.wallet.findMany({
+    const results = await this.prisma.wallet.findMany({
       where: {
         userId,
       },
     });
+
+    return results.map((wallet) => ({
+      ...wallet,
+      balance: Number(wallet.balance),
+    }));
   }
 
   async findByName(name: string, userId: string): Promise<WalletEntity> {
-    return this.prisma.wallet.findFirst({
+    const result = await this.prisma.wallet.findFirst({
       where: {
         name: {
           mode: 'insensitive',
@@ -45,15 +57,29 @@ export class PrismaWalletRepository implements WalletRepository {
         userId,
       },
     });
+
+    if (result) {
+      return {
+        ...result,
+        balance: Number(result.balance),
+      };
+    }
   }
 
   async findOne(id: string, userId: string): Promise<WalletEntity> {
-    return this.prisma.wallet.findFirst({
+    const result = await this.prisma.wallet.findFirst({
       where: {
         id,
         userId,
       },
     });
+
+    if (result) {
+      return {
+        ...result,
+        balance: Number(result.balance),
+      };
+    }
   }
 
   async update(id: string, params: Partial<WalletEntity>): Promise<void> {

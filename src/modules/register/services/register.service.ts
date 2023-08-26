@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import {
+  PaginationRegisterEntity,
   RegisterEntity,
   RegisterRepository,
 } from '../repositoires/register.repository';
@@ -20,8 +21,9 @@ import {
   MinLength,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { th } from 'date-fns/locale';
+import { el, th } from 'date-fns/locale';
 import { PrismaService } from '../../database/prisma.service';
+import { QueryParamsRegisterDto } from '../dto/query-params-register.dto';
 
 @Injectable()
 export class RegisterService {
@@ -41,7 +43,10 @@ export class RegisterService {
   ): Promise<RegisterEntity> {
     let fileUpload = null;
 
-    await this.walleteService.findOne(createRegisterDto.walletId, userId);
+    const wallet = await this.walleteService.findOne(
+      createRegisterDto.walletId,
+      userId,
+    );
 
     await this.categorySerivce.findOne(createRegisterDto.categoryId, userId);
 
@@ -62,11 +67,22 @@ export class RegisterService {
     //@ts-ignore
     createRegisterDto.entry = createRegisterDto.entry === 'true';
 
+    if (createRegisterDto.entry) {
+      wallet.balance += createRegisterDto.value;
+    } else {
+      wallet.balance -= createRegisterDto.value;
+    }
+
+    await this.walleteService.update(wallet.id, wallet, userId);
+
     return this.registerRepository.create(createRegisterDto, userId);
   }
 
-  async findAll(userId: string): Promise<RegisterEntity[]> {
-    return this.registerRepository.findAll(userId);
+  async findAll(
+    userId: string,
+    queriesParams: QueryParamsRegisterDto,
+  ): Promise<PaginationRegisterEntity> {
+    return this.registerRepository.findAll(userId, queriesParams);
   }
 
   async findOne(id: string, userId: string): Promise<RegisterEntity> {
@@ -89,6 +105,14 @@ export class RegisterService {
 
     if (!registerFind) {
       throw new EntityNotFoundException('Registro não encontrado');
+    }
+
+    const wallet = await this.walleteService.findOne(body.walletId, userId);
+
+    if (registerFind.entry) {
+      wallet.balance -= registerFind.value;
+    } else {
+      wallet.balance += registerFind.value;
     }
 
     if (fileRequest) {
@@ -124,6 +148,14 @@ export class RegisterService {
     //@ts-ignore
     body.entry = body.entry === 'true';
 
+    if (body.entry) {
+      wallet.balance += body.value;
+    } else {
+      wallet.balance -= body.value;
+    }
+
+    await this.walleteService.update(wallet.id, wallet, userId);
+
     await this.registerRepository.update(id, body);
   }
 
@@ -137,6 +169,19 @@ export class RegisterService {
       });
     }
 
+    const wallet = await this.walleteService.findOne(
+      registerExists.wallet.id,
+      userId,
+    );
+
+    if (registerExists.entry) {
+      wallet.balance -= registerExists.value;
+    } else {
+      wallet.balance += registerExists.value;
+    }
+
+    await this.walleteService.update(wallet.id, wallet, userId);
+
     await this.registerRepository.delete(id);
   }
 
@@ -146,6 +191,11 @@ export class RegisterService {
   @Cron(CronExpression.EVERY_DAY_AT_3AM) // Todo dia as 3:00 da manhã
   async schedulleRecurrencyRegister() {
     const recurrenciesRegisters = await this.registerRepository.findRecurrent();
+
+    if (recurrenciesRegisters.length === 0) {
+      console.log('NOT FIND REGISTERS WITH RECURRENCY!');
+      return;
+    }
 
     const idsToUpdate = [];
 

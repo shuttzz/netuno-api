@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -19,6 +20,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { CreateRegisterDto } from '../dto/create-register.dto';
 import { GetUser } from '../../auth/decorators/get-user.decorator';
 import { UpdateRegisterDto } from '../dto/update-register.dto';
+import { QueryParamsRegisterDto } from '../dto/query-params-register.dto';
 
 @Controller('registers')
 @UseGuards(AuthGuard())
@@ -36,8 +38,11 @@ export class RegisterController {
   }
 
   @Get()
-  async findAll(@GetUser() user: { id: string }) {
-    return this.service.findAll(user.id);
+  async findAll(
+    @GetUser() user: { id: string },
+    @Query() queryParams: QueryParamsRegisterDto,
+  ) {
+    return this.service.findAll(user.id, queryParams);
   }
 
   @Get(':id')
