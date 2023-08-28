@@ -138,6 +138,10 @@ export class UserService {
       updateUserDto.avatarKey = null;
     }
 
+    if (updateUserDto.active) {
+      updateUserDto.active = Boolean(updateUserDto.active);
+    }
+
     await this.userRepository.update({
       id: userFind.id,
       avatarUrl: updateUserDto.avatarUrl,
