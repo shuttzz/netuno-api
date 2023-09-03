@@ -33,6 +33,12 @@ export class UserController {
     return this.userService.create(createAuthDto, file);
   }
 
+  @Get('me')
+  @UseGuards(AuthGuard())
+  async me(): Promise<{ status: string }> {
+    return { status: 'success' };
+  }
+
   @Get()
   @UseGuards(AuthGuard())
   async findAll(): Promise<UserResponse[]> {
